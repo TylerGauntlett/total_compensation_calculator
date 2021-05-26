@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Total Compensation Calculator</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+
 <body>
 <main role="main" class="container">
     <div id="app" class="">
@@ -5,13 +18,23 @@
             <div class="col-md-12 mt-1 text-center">
                 <div>
                     <h3 class="text-success mb-0">
-                        {{total}}
-                    </h3>
+                        {{total}} </h3>
                 </div>
-                <div class="mb-2">
+                <div>
                     <small class="text-muted">
-                        Paid Vacation: <span class="text-success">{{paidVacation}}</span>
+                        Paid Vacation:
+                        <span class="text-success">{{paidVacation}}</span>
                     </small>
+                </div>
+                <div>
+                    <span class="float-right mb-2">
+                        <button class="btn btn-sm btn-danger" @click="clear">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <button class="btn btn-sm btn-dark mr-1" @click="save">
+                            <i class="far fa-save"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
@@ -67,7 +90,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="prepend-stockIncrease">%</span>
                                     </div>
-                                    <input v-model="stockIncrease" type="number" class="form-control" id="stockIncrease">
+                                    <input
+                                        v-model="stockIncrease" type="number" class="form-control" id="stockIncrease">
                                 </div>
                             </div>
 
@@ -122,7 +146,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="prepend-rsuVestingPeriod">Years</span>
                                     </div>
-                                    <input v-model="rsuVestingPeriod" type="number" class="form-control" id="rsuVestingPeriod">
+                                    <input
+                                        v-model="rsuVestingPeriod" type="number" class="form-control"
+                                        id="rsuVestingPeriod">
                                 </div>
                             </div>
 
@@ -195,3 +221,11 @@
     </div>
 </main>
 </body>
+
+<!-- Scripts -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>

@@ -11,9 +11,14 @@ new Vue({
         rsuVestingPeriod: 3,
         hsa: 1000,
         pto: 10,
-        holidays: 8
+        holidays: 8,
+
+        // Stores all values above in a running copy
+        // to reset defaults
+        _defaults: {}
     },
     computed: {
+        // Final end user output
         total() {
             let total = this.bonus
                 + this.salaryWithoutEspp
@@ -27,7 +32,7 @@ new Vue({
         paidVacation() {
             const workingHoursInYear = 2080;
 
-            let total = (this.pto + this.holidays) * (this.base / workingHoursInYear)
+            let total = (this.pto + this.holidays) * (this.base / workingHoursInYear);
 
             return this.format(total);
         },
@@ -79,6 +84,11 @@ new Vue({
         },
         k401Percent() {
             return this.k401 / 100;
+        },
+
+        // Storage helpers
+        hasStorage() {
+            return !!this.getStorage();
         }
     },
     methods: {
@@ -89,6 +99,49 @@ new Vue({
             });
 
             return formatter.format(value);
+        },
+
+        // Save methods
+        setStorage(data) {
+            localStorage.setItem('data', JSON.stringify(data));
+        },
+        getStorage() {
+            return JSON.parse(localStorage.getItem('data'));
+        },
+        setDataProperties(data) {
+            // Load _data properties on instance
+            _.each(data, (value, key) => {
+                // __default is used to store the initial data props
+                if (key !== '_default') {
+                    this[key] = value;
+                }
+            });
+        },
+        save() {
+            this.setStorage(this._data);
+        },
+        clear() {
+            // Clear storage
+            localStorage.removeItem('data');
+
+            // Reset properties on clear
+            this.setDataProperties(_.clone(this._defaults));
+        },
+
+        initialize() {
+            // Get all data properties
+            let defaults = _.clone(this._data);
+
+            // Use local storage or defaults
+            let data = this.hasStorage ? this.getStorage() : defaults;
+
+            this.setDataProperties(_.clone(data));
+
+            // Re-set runtime with all _data properties on mount
+            this._defaults = defaults;
         }
+    },
+    beforeMount() {
+        this.initialize();
     }
 });
