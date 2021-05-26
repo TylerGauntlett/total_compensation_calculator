@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Total Compensation Calculator</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body>
+<main role="main" class="container">
+    <div id="app" class="">
+        <div class="row">
+            <div class="col-md-12 mt-1 text-center">
+                <div>
+                    <h3 class="text-success mb-0">
+                        {{total}}
+                    </h3>
+                </div>
+                <div class="mb-2">
+                    <small class="text-muted">
+                        Paid Vacation: <span class="text-success">{{paidVacation}}</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Cash
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+
+                            <!-- Annual Base Salary -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="base">Annual Base Salary</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-base">$</span>
+                                    </div>
+                                    <input v-model="base" type="number" class="form-control " id="base">
+                                </div>
+                            </div>
+
+                            <!-- Annual Bonus -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="sti">Annual Bonus</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-sti">%</span>
+                                    </div>
+                                    <input v-model="sti" type="number" class="form-control " id="sti">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Stock
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+
+                            <!-- Annual Stock Percent Increase -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="stockIncrease">Annual Stock Percent Increase</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-stockIncrease">%</span>
+                                    </div>
+                                    <input v-model="stockIncrease" type="number" class="form-control" id="stockIncrease">
+                                </div>
+                            </div>
+
+                            <!-- ESPP Percent Contribution -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="espp">ESPP Percent Contribution</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-espp">%</span>
+                                    </div>
+                                    <input v-model="espp" type="number" class="form-control" id="espp">
+                                </div>
+                            </div>
+
+                            <!-- ESPP Percent Discount -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="esppDiscount">ESPP Percent Discount</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-esppDiscount">%</span>
+                                    </div>
+                                    <input v-model="esppDiscount" type="number" class="form-control" id="esppDiscount">
+                                </div>
+                            </div>
+
+                            <!-- 401k Percent Contribution -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="k401">401k Percent Contribution</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-k401">%</span>
+                                    </div>
+                                    <input v-model="k401" type="number" class="form-control" id="k401">
+                                </div>
+                            </div>
+
+                            <!-- Annual RSU -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="rsu">Annual RSU</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-rsu">$</span>
+                                    </div>
+                                    <input v-model="rsu" type="number" class="form-control" id="rsu">
+                                </div>
+                            </div>
+
+                            <!-- Annual RSU Vesting Period -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="rsuVestingPeriod">Annual RSU Vesting Period</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-rsuVestingPeriod">Years</span>
+                                    </div>
+                                    <input v-model="rsuVestingPeriod" type="number" class="form-control" id="rsuVestingPeriod">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Medical
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+
+                            <!-- Annual HSA Contribution -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="hsa">Annual HSA Contribution</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-hsa">$</span>
+                                    </div>
+                                    <input v-model="hsa" type="number" class="form-control" id="hsa">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        Vacation
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+
+                            <!-- Annual PTO -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="pto">Annual PTO</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-pto">Days</span>
+                                    </div>
+                                    <input v-model="pto" type="number" class="form-control" id="pto">
+                                </div>
+                            </div>
+
+                            <!-- Annual Paid Holidays -->
+                            <div class="col-md-6 col-xs-12 mb-2">
+                                <label for="pto">Annual Paid Holidays</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="prepend-holidays">Days</span>
+                                    </div>
+                                    <input v-model="holidays" type="number" class="form-control" id="holidays">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
