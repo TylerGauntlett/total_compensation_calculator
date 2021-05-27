@@ -83,12 +83,34 @@
 
                             <!-- Annual Bonus -->
                             <div class="col-md-6 col-xs-12 mb-2">
-                                <label for="sti">Annual Bonus</label>
+                                <label for="sti">
+                                    Annual Bonus
+                                    :
+                                    <span class="text-success">
+                                        {{ format(bonus) }}
+                                    </span>
+                                </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="prepend-sti">%</span>
+                                        <button
+                                            id="prepend-sti"
+                                            @click="toggleSti"
+                                            class="btn btn-outline-dark"
+                                            type="button">
+                                            <span v-if="stiMode === 'percent'">
+                                                %
+                                            </span>
+                                            <span v-else>
+                                                $
+                                            </span>
+                                        </button>
                                     </div>
                                     <input v-model="sti" type="number" class="form-control " id="sti">
+                                    <div class="input-group-append">
+                                        <button @click="sti = 0" class="btn btn-outline-danger" type="button">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -248,7 +270,7 @@
 <!-- Scripts -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-<script src="./script.js?version=1"></script>
+<script src="./script.js?version=2"></script>
 
 </body>
 </html>

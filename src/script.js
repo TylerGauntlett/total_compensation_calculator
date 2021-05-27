@@ -6,6 +6,7 @@ new Vue({
         base: 50000,
         baseMode: 'salary',
         sti: 5,
+        stiMode: 'percent',
         k401: 4,
         espp: 15,
         esppDiscount: 15,
@@ -47,6 +48,10 @@ new Vue({
             return this.base * workingHoursInYear;
         },
         bonus() {
+            if (this.stiMode === 'flat') {
+                return this.sti;
+            }
+
             return this.normalizedBase * this.stiPercent;
         },
         salaryWithoutEspp() {
@@ -116,6 +121,10 @@ new Vue({
 
             // Update base to convert between types
             this.base = this.baseMode === 'salary' ? (this.base * workingHoursInYear) : Math.floor(this.base / workingHoursInYear)
+        },
+        toggleSti() {
+            // Toggle the sti mode
+            this.stiMode = this.stiMode === 'percent' ? 'flat' : 'percent';
         },
 
         // Save methods
