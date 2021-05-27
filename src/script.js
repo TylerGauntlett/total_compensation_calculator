@@ -1,7 +1,10 @@
+const workingHoursInYear = 2080;
+
 new Vue({
     el: "#app",
     data: {
         base: 50000,
+        baseMode: 'salary',
         sti: 5,
         k401: 4,
         espp: 15,
@@ -30,25 +33,30 @@ new Vue({
             return this.format(total);
         },
         paidVacation() {
-            const workingHoursInYear = 2080;
-
-            let total = (this.pto + this.holidays) * (this.base / workingHoursInYear);
+            let total = (this.pto + this.holidays) * (this.normalizedBase / workingHoursInYear);
 
             return this.format(total);
         },
 
         // Variables used in total calculation
+        normalizedBase() {
+            if (this.baseMode === 'salary') {
+                return this.base
+            }
+
+            return this.base * workingHoursInYear;
+        },
         bonus() {
-            return this.base * this.stiPercent;
+            return this.normalizedBase * this.stiPercent;
         },
         salaryWithoutEspp() {
-            return this.base * (1 - (this.esppPercent * (1 + this.stockIncreasePercent)));
+            return this.normalizedBase * (1 - (this.esppPercent * (1 + this.stockIncreasePercent)));
         },
         salaryWithEspp() {
-            return (this.base * this.esppPercent * (1 + this.stockIncreasePercent)) * (1 + this.esppDiscountPercent) * (1 + this.stockIncreasePercent);
+            return (this.normalizedBase * this.esppPercent * (1 + this.stockIncreasePercent)) * (1 + this.esppDiscountPercent) * (1 + this.stockIncreasePercent);
         },
         k401Contribution() {
-            return this.base * this.k401Percent;
+            return this.normalizedBase * this.k401Percent;
         },
         rsuContribution() {
             if (this.rsuVestingPeriod === 0) {
@@ -99,6 +107,15 @@ new Vue({
             });
 
             return formatter.format(value);
+        },
+
+        // State methods
+        toggleBase() {
+            // Toggle the base mode
+            this.baseMode = this.baseMode === 'salary' ? 'hourly' : 'salary';
+
+            // Update base to convert between types
+            this.base = this.baseMode === 'salary' ? (this.base * workingHoursInYear) : Math.floor(this.base / workingHoursInYear)
         },
 
         // Save methods

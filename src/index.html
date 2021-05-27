@@ -18,7 +18,8 @@
             <div class="col-md-12 mt-1 text-center">
                 <div>
                     <h3 class="text-success mb-0">
-                        {{total}} </h3>
+                        {{total}}
+                    </h3>
                 </div>
                 <div>
                     <small class="text-muted">
@@ -29,7 +30,7 @@
                 <div>
                     <span class="float-right mb-2">
                         <button class="btn btn-sm btn-danger" @click="clear">
-                            <i class="fas fa-trash-alt"></i>
+                            <i class="fas fa-ban"></i>
                         </button>
                         <button class="btn btn-sm btn-dark mr-1" @click="save">
                             <i class="far fa-save"></i>
@@ -49,12 +50,34 @@
 
                             <!-- Annual Base Salary -->
                             <div class="col-md-6 col-xs-12 mb-2">
-                                <label for="base">Annual Base Salary</label>
+                                <label for="base">
+                                    <span v-if="baseMode === 'salary'">
+                                        Annual Base Salary
+                                    </span>
+                                    <span v-else>
+                                        Hourly Rate
+                                    </span>
+                                    :
+                                    <span class="text-success">
+                                        {{ format(normalizedBase) }}
+                                    </span>
+                                </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="prepend-base">$</span>
+                                        <button
+                                            id="prepend-base"
+                                            @click="toggleBase"
+                                            class="btn btn-outline-dark"
+                                            type="button">
+                                            $
+                                        </button>
                                     </div>
                                     <input v-model="base" type="number" class="form-control " id="base">
+                                    <div class="input-group-append">
+                                        <button @click="base = 0" class="btn btn-outline-danger" type="button">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
