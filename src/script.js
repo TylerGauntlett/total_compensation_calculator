@@ -1,4 +1,5 @@
 const workingHoursInYear = 2080;
+const daysInYear = 365;
 
 new Vue({
     el: "#app",
@@ -34,7 +35,7 @@ new Vue({
             return this.format(total);
         },
         paidVacation() {
-            let total = (this.pto + this.holidays) * (this.normalizedBase / workingHoursInYear);
+            let total = (this.pto + this.holidays) * (this.normalizedBase / daysInYear);
 
             return this.format(total);
         },
