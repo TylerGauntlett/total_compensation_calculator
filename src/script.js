@@ -4,6 +4,7 @@ const daysInYear = 365;
 new Vue({
     el: "#app",
     data: {
+        // Core
         base: 50000,
         baseMode: 'salary',
         sti: 5,
@@ -17,6 +18,10 @@ new Vue({
         hsa: 1000,
         pto: 10,
         holidays: 8,
+
+        // Tooltips
+        clearTooltip: 'Clear from browser',
+        saveTooltip: 'Save in browser',
 
         // Stores all values above in a running copy
         // to reset defaults
@@ -146,6 +151,9 @@ new Vue({
         },
         save() {
             this.setStorage(this._data);
+
+            // Update tooltip
+            this.updateTooltip('#save-btn', this.saveTooltip, 'Saved!')
         },
         clear() {
             // Clear storage
@@ -153,8 +161,28 @@ new Vue({
 
             // Reset properties on clear
             this.setDataProperties(_.clone(this._defaults));
-        },
 
+            // Update tooltip
+            this.updateTooltip('#clear-btn', this.clearTooltip, 'Cleared!')
+        },
+        updateTooltip: function (element, oldValue, newValue) {
+            var selector = $(element);
+
+            // Show new tooltip
+            selector
+                .attr('data-original-title', newValue)
+                .tooltip('show');
+
+            // Reset old tooltip
+            selector
+                .attr('data-original-title', oldValue)
+                .tooltip({trigger : 'hover'});
+        },
+        enableTooltips: function () {
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip({trigger : 'hover'});
+            })
+        },
         initialize() {
             // Get all data properties
             let defaults = _.clone(this._data);
@@ -170,5 +198,8 @@ new Vue({
     },
     beforeMount() {
         this.initialize();
+    },
+    mounted() {
+        this.enableTooltips();
     }
 });
